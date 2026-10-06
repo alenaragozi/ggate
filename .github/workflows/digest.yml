@@ -7,8 +7,8 @@ on:
 
 jobs:
   digest:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -21,5 +21,10 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CHANNEL: ggm_news
+          # Контрольные каналы через запятую, например: "channel_one,channel_two"
+          CONTROL_CHANNELS: ""
           DAYS: "7"
           TOP_N: "7"
+          MAX_PER_COUNTRY: "2"
+          MAX_PER_CATEGORY: "3"
+          SEND_REPORT: "1"   # 1 – присылать справку с баллами, 0 – не присылать
