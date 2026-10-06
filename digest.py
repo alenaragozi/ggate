@@ -32,17 +32,6 @@ def fetch_page(before=None):
     return r.text
 
 
-def external_link(text_el):
-    """Первая внешняя ссылка в посте (на сайт со статьёй), если есть."""
-    if not text_el:
-        return None
-    for a in text_el.select("a[href]"):
-        href = a["href"]
-        if href.startswith("http") and "t.me/" not in href:
-            return href
-    return None
-
-
 def parse(page_html):
     soup = BeautifulSoup(page_html, "html.parser")
     posts = []
@@ -56,7 +45,7 @@ def parse(page_html):
             "id": post_id,
             "date": dt.datetime.fromisoformat(t["datetime"]),
             "text": text_el.get_text("\n", strip=True) if text_el else "",
-            "url": external_link(text_el) or f"https://t.me/{CHANNEL}/{post_id}",
+            "url": f"https://t.me/{CHANNEL}/{post_id}",
         })
     return posts
 
