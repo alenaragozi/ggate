@@ -22,4 +22,4 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CHANNEL: ggm_news
           DAYS: "7"
-          TOP_N: "10"
+          TOP_N: "7"
