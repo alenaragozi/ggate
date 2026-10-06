@@ -21,8 +21,8 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CHANNEL: ggm_news
-          # Контрольные каналы через запятую, например: "channel_one,channel_two"
-          CONTROL_CHANNELS: ""
+          # Контрольные каналы через запятую
+          CONTROL_CHANNELS: "iGaming_PUSH,igaming_news,gamblnews,thepartnerkin_gambl,igamingceo"
           DAYS: "7"
           TOP_N: "7"
           MAX_PER_COUNTRY: "2"
