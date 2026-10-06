@@ -125,7 +125,7 @@ def call_claude(prompt, max_tokens):
         "https://api.anthropic.com/v1/messages",
         headers={"x-api-key": API_KEY, "anthropic-version": "2023-06-01",
                  "content-type": "application/json"},
-        json={"model": MODEL, "max_tokens": max_tokens, "temperature": 0,
+        json={"model": MODEL, "max_tokens": max_tokens,
               "messages": [{"role": "user", "content": prompt}]},
         timeout=600,
     )
@@ -207,6 +207,9 @@ def score(ours, controls, classes):
             for ref in p["our_refs"]:
                 reposts.setdefault(ref, set()).add(ch)
 
+    # названия контрольных каналов без учёта регистра: Claude может написать их иначе
+    ctrl_names = {ch.lower(): ch for ch in controls}
+
     # группы: каноничный пост + его дубли
     groups = {}
     for pid in ours:
@@ -229,7 +232,10 @@ def score(ours, controls, classes):
         for pid in members:
             p = ours[pid]
             rep_ch |= reposts.get(pid, set())
-            men_ch |= {str(m).lstrip("@") for m in (by_id[pid].get("mentions") or [])} & set(controls)
+            for m in (by_id[pid].get("mentions") or []):
+                ch = ctrl_names.get(str(m).strip().lstrip("@").lower())
+                if ch:
+                    men_ch.add(ch)
             hours = max((now - p["date"]).total_seconds() / 3600, 1)
             vph = max(vph, p["views"] / hours)
         men_ch -= rep_ch
