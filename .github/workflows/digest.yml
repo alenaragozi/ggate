@@ -2,7 +2,7 @@ name: Weekly digest ggm_news
 
 on:
   schedule:
-    - cron: "0 14 * * 5"   # каждую пятницу в 17:00 по Москве (14:00 UTC)
+    - cron: "50 13 * * 5"   # каждую пятницу в 17:00 по Москве (14:00 UTC)
   workflow_dispatch:        # кнопка ручного запуска
 
 jobs:
